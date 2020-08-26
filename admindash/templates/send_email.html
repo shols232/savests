@@ -1,0 +1,76 @@
+{% load static %}
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" type="text/css" href="/static/admin/css/base.css">
+     <title>Document</title>
+
+    <style>
+        #cancel:hover{
+            background-color:saddlebrown;
+        }
+        #cancel{
+            background-color:sandybrown;
+        }
+    </style>
+
+ </head>
+ <body class='change-form'>
+    <container>
+        <div id="header">
+            <div id="branding">      
+                <h1 id="site-name"><a href="/admin/">Django administration</a></h1>
+            </div>
+        </div>
+        <div class="breadcrumbs">
+            <a href="/admin/">Home</a>
+            &rsaquo; <a href="/admin/auth/">Authentication and Authorization</a>
+            &rsaquo; <a href="/admin/auth/user/">user</a>
+            &rsaquo; send_email
+        </div>
+        <div class='content' style='padding-left: 35px;'>
+        <h2 style='text-align: center;'>Compose email</h2>
+        <form id="form" method="POST">
+            {% csrf_token %}
+            <div class='form-row'>
+                <div>
+                    <label for="cars">To: </label>
+                    <select name="email" id="email">
+                      <option value="everyone">everyone</option>
+                      {% for user in users %}
+                      <option value="{{user.id}}">{{user.email}}</option>
+                      {% endfor %}
+                    </select>
+                    <br><br> 
+                    <label for="subject" id="email-subject">Subject:</label>
+                    <br><br>
+                    <input type="text" name='subject' placeholder="subject here...">
+                    <br><br>
+                </div>
+            </div>
+            <div class='form-row'>
+                <div>
+                    <label for="message">Body:</label>
+                    <br><br>
+                    <textarea name="message" id="email-body" cols="30" rows="10"></textarea>
+                    <br><br>
+                </div>
+            </div>
+            <input type="submit" value="send" id="send-btn">
+            <input type="button"    value="Go back" id="cancel">
+        </form>
+    </div>
+    </container>
+    <script type="text/javascript">
+
+    let cancelBtn = document.getElementById('cancel')
+    cancelBtn.addEventListener('click', function(){
+        var base_url = window.location.origin;
+        window.location.href = base_url + '/admin/auth/user/'
+    })
+    </script>
+ </body>
+ </html>
+   

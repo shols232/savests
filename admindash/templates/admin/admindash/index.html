@@ -1,0 +1,136 @@
+{% extends "admin/index.html" %}
+
+{% load i18n static %}
+
+{% block extrastyle  %}
+{{ block.super }}
+<style type='text/css'>
+
+    h2{
+        font-family: 'Courier New', Courier, monospace;
+        text-align: center;
+    }
+    .email-heading{
+        background-color:#79aec8;
+        padding:2.5px;
+        color:white;
+    }
+
+    .box table{
+        width:196px;
+        margin:0px;
+    }
+    #content > #content-related {
+        display:none;
+    }
+    .box{
+        font-family: 'Courier New', Courier, monospace;
+        display: inline-block;
+        margin:0px;
+    }
+    #user-status{
+        margin-top: 20px;
+    }
+
+    #user-status table{
+        width:600px;
+    }
+
+</style>
+{% endblock extrastyle %}
+
+{% block content %}
+<h2>
+    User Metrics
+</h2>
+<hr><br>
+<div>
+{% block sidebar %}
+{{ block.super }}
+{% endblock %}
+    <div class='box'>
+    <div class='email-heading'>Last 24 hours</div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">User</th>
+                <th scope="col">log in date</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for user in last_24_hours %}
+                <tr>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.date_joined }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class='box'>
+        <div class='email-heading'>Last Month</div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">User</th>
+                <th scope="col">log in date</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for user in last_month %}
+                <tr>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.date_joined }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class='box'>
+        <div class='email-heading'>Last year</div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">User</th>
+                <th scope="col">log in date</th>
+            </tr>
+            </thead>
+            <tbody>
+                {% for user in last_year %}
+                <tr>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.date_joined }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id='user-status'>
+    <div class='email-heading'>User Positions</div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">admins</th>
+            <th scope="col">staff</th>
+            <th scope="col">non-staff</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for item in user_status %}
+            <tr>
+                <td>{{ item.admin.username }}</td>
+                <td>{{ item.staff.username }}</td>
+                <td>{{ item.non_staff.username }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+</div>
+{{block.super}}
+
+{%endblock content%}
+
+

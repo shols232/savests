@@ -1,0 +1,17 @@
+{% extends 'admin/change_list.html' %}
+
+{% block object-tools %}
+<input id='send-email' style='margin-bottom: 10px;' type="button" value="send email"></input>
+
+<script>
+
+    let btn = document.getElementById('send-email')
+    btn.addEventListener('click', function(){
+        window.location.href = `{% url "admindash:send_email"  %}`
+    })
+
+</script>
+
+{{ block.super }}
+
+{% endblock object-tools %}
