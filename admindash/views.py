@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
 from django.core.mail import send_mail
 from .forms import SendEmailForm
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.models import User
 from .models import SendEmail
 
+@staff_member_required
 def send_email(request, **kwargs):
     if request.method == 'POST':
         form_data = request.POST
@@ -30,7 +32,7 @@ def send_email(request, **kwargs):
     users = User.objects.all()
     return render(request, 'send_email.html', {'users':users})
 
-
+@staff_member_required
 def toggle_user_activity(request, id):
     user = User.objects.get(id=id)
     if user.is_active:
@@ -40,6 +42,7 @@ def toggle_user_activity(request, id):
     user.save()
     return redirect('/admin/auth/user')
 
+@staff_member_required
 def toggle_admin(request, id):
     user = User.objects.get(id=id)
 
